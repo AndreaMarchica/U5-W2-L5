@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -47,10 +49,18 @@ public class UsersController {
         return usersService.findByIdAndUpdate(userId, body);
     }
 
-    @DeleteMapping("/{userId}")
+/*    @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findAndDelete(@PathVariable UUID userId) {
         usersService.findByIdAndDelete(userId);
     }
+    @PatchMapping("/{authorId}/profileimage")
+    public User uploadProfileImage(@RequestParam("profileimage") MultipartFile file, @PathVariable UUID userId) {
+        try {
+            return usersService.uploadProfileImage(userId, file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
 
 }
