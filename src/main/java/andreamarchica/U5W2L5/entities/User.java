@@ -20,6 +20,7 @@ public class User {
     private String surname;
     private String email;
     private String profileImage;
+    private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonIgnore
     List<Device> deviceList;
@@ -42,6 +43,10 @@ public class User {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

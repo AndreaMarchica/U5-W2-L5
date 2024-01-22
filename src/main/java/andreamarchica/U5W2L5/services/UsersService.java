@@ -6,6 +6,7 @@ import andreamarchica.U5W2L5.exceptions.BadRequestException;
 import andreamarchica.U5W2L5.exceptions.NotFoundException;
 import andreamarchica.U5W2L5.payloads.users.NewUserDTO;
 import andreamarchica.U5W2L5.repositories.UsersRepository;
+import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
     @Autowired
-    private CloudinaryConfig cloudinaryConfig;
+    private Cloudinary cloudinary;
 
     public User save(NewUserDTO body) throws IOException {
         usersRepository.findByEmail(body.email()).ifPresent(user -> {
@@ -35,6 +36,7 @@ public class UsersService {
         newUser.setName(body.name());
         newUser.setEmail(body.email());
         newUser.setSurname(body.surname());
+        newUser.setPassword(body.password());
         return usersRepository.save(newUser);
     }
 
@@ -61,14 +63,17 @@ public class UsersService {
         found.setName(body.getName());
         found.setSurname(body.getSurname());
         found.setProfileImage(body.getProfileImage());
+        found.setPassword(body.getPassword());
         return usersRepository.save(found);
     }
 
-/*    public User uploadProfileImage(UUID id, MultipartFile file) throws IOException {
+    public User uploadProfileImage(UUID id, MultipartFile file) throws IOException {
         User found = this.findById(id);
-        String profileImage = (String) cloudinaryConfig.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+        String profileImage = (String) cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
         found.setProfileImage(profileImage);
         return usersRepository.save(found);
-    }*/
-
+    }
+    public User findByEmail(String email) throws NotFoundException {
+        return usersRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente con email " + email + " non trovata!"));
+    }
 }

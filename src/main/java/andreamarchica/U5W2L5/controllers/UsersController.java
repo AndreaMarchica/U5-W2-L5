@@ -54,7 +54,6 @@ public class UsersController {
     public void findAndDelete(@PathVariable UUID userId) {
         usersService.findByIdAndDelete(userId);
     }
- /*
     @PatchMapping("/{authorId}/profileimage")
     public User uploadProfileImage(@RequestParam("profileimage") MultipartFile file, @PathVariable UUID userId) {
         try {
@@ -62,6 +61,6 @@ public class UsersController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 
 }
