@@ -1,6 +1,7 @@
 package andreamarchica.U5W2L5.services;
 
 import andreamarchica.U5W2L5.config.CloudinaryConfig;
+import andreamarchica.U5W2L5.entities.Role;
 import andreamarchica.U5W2L5.entities.User;
 import andreamarchica.U5W2L5.exceptions.BadRequestException;
 import andreamarchica.U5W2L5.exceptions.NotFoundException;
@@ -26,7 +27,7 @@ public class UsersService {
     @Autowired
     private Cloudinary cloudinary;
 
-    public User save(NewUserDTO body) throws IOException {
+/*    public User save(NewUserDTO body) throws IOException {
         usersRepository.findByEmail(body.email()).ifPresent(user -> {
             throw new BadRequestException("L'email " + body.email() + " è già stata utilizzata");
         });
@@ -37,8 +38,9 @@ public class UsersService {
         newUser.setEmail(body.email());
         newUser.setSurname(body.surname());
         newUser.setPassword(body.password());
+        newUser.setRole(Role.USER);
         return usersRepository.save(newUser);
-    }
+    }*/
 
     public Page<User> getUsers(int page, int size, String sort) {
 

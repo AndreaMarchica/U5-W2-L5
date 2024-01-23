@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,13 @@ public class ExceptionsHandler {
     public ErrorsDTO handleUnauthorized(UnauthorizedException e) {
         Date date = new Date();
         return new ErrorsDTO(e.getMessage(), date);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN) // 403
+    public ErrorsDTO handleAccessDenied(AccessDeniedException ex) {
+        Date date = new Date();
+        return new ErrorsDTO("Il tuo ruolo non permette di accedere a questa funzionalità!", date);
     }
 
     @ExceptionHandler(NotFoundException.class)
